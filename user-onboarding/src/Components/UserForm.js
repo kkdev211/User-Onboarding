@@ -33,7 +33,7 @@ const UserForm = ({ touched, errors, status }) => {
             </label>
             <label className="checkbox-container">
               Terms of Service
-              <Field type="checkbox" name="terms of service" />
+              <Field type="checkbox" name="terms"
               <span className="checkmark" />
             </label>
             <button> Submit </button>
@@ -53,7 +53,7 @@ export default withFormik({
     name: props.name || "",
     email: "",
     password: "",
-    Terms of Service: false
+    terms: false,
   }),
   validationSchema: yup.object().shape({
     species: yup
@@ -61,8 +61,7 @@ export default withFormik({
       .required("This is the name field and it is required!")
   }),
   handleSubmit: (values, { resetForm, setStatus }) => {
-    // console.log("Submitting!", formikBag)
-    // POST body === {}
+    
     axios
       .post("https://reqres.in/api/users", values)
       .then(response => {
