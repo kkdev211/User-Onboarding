@@ -33,7 +33,7 @@ const UserForm = ({ touched, errors, status }) => {
             </label>
             <label className="checkbox-container">
               Terms of Service
-              <Field type="checkbox" name="terms"
+              <Field type="checkbox" name="terms"/>
               <span className="checkmark" />
             </label>
             <button> Submit </button>
@@ -53,7 +53,7 @@ export default withFormik({
     name: props.name || "",
     email: "",
     password: "",
-    terms: false,
+    terms: false
   }),
   validationSchema: yup.object().shape({
     species: yup
