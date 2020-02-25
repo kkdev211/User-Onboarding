@@ -6,10 +6,11 @@ import { withFormik, Form, Field } from "formik";
 import * as yup from "yup"; // for everything
 
 const UserForm = ({ touched, errors, status }) => {
-    console.log("This is our status", status);
+    
     const [user, setUser] = useState({});
   
     useEffect(() => {
+      console.log("This is our status", status);
       status && setUser(status);
     }, [status]);
 
@@ -48,7 +49,7 @@ const UserForm = ({ touched, errors, status }) => {
     </div>
   );
 };
-export default withFormik({
+const FormikUserForm = withFormik({
   mapPropsToValues: props => ({
     name: props.name || "",
     email: "",
@@ -56,19 +57,24 @@ export default withFormik({
     terms: false
   }),
   validationSchema: yup.object().shape({
-    species: yup
+    name: yup
       .string()
-      .required("This is the name field and it is required!")
+      .required("Please enter a name!"),
+    email: yup
+      .string()
+      .required("You need an email")
   }),
-  handleSubmit: (values, { resetForm, setStatus }) => {
-    
+  handleSubmit: (values, { setStatus, resetForm }) => {
+    console.log ("submitting...", values);
     axios
       .post("https://reqres.in/api/users", values)
       .then(response => {
-        console.log(response);
+        console.log("success", response);
         setStatus(response.data);
         resetForm();
       })
       .catch(err => console.log(err.response));
   }
 })(UserForm);
+
+export default FormikUserForm;
